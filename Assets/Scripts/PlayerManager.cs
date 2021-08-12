@@ -60,15 +60,19 @@ public class PlayerManager : MonoBehaviour, ICapabilityes
             powerUpTimer.rectTransform.DOMoveX(Input.mousePosition.x, 0.2f);
         }
 
+        if (isImmune || isSmallSize)
+        {
+            timer += Time.deltaTime;
+        }
 
         if (isImmune)
         {
             flashing.StartFlashing();
-            timer += Time.deltaTime;
             if (timer >= powerUpIterator)
             {
                 flashing.EndFlashing();
                 PowerUpTimerIndecator.DOAnchorPosY(500, 0.6f);
+                gameObject.transform.DOScale(new Vector3(0.5f, 0.1f, 0.5f), 0.1f);
                 timer = 0;
                 isImmune = false;
             }
@@ -76,12 +80,11 @@ public class PlayerManager : MonoBehaviour, ICapabilityes
 
         if (isSmallSize)
         {
-            timer += Time.deltaTime;
             if (timer >= powerUpIterator)
             {
-                timer = 0;
                 PowerUpTimerIndecator.DOAnchorPosY(500, 0.6f);
                 gameObject.transform.DOScale(new Vector3(0.5f, 0.1f, 0.5f), 0.1f);
+                timer = 0;
                 isSmallSize = false;
             }
         }
